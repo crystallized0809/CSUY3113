@@ -19,7 +19,7 @@ bool gameIsRunning = true;
 ShaderProgram program;
 glm::mat4 viewMatrix, personMatrix, sunMatrix, projectionMatrix;
 
-float player_x = -1;
+float player_x = -5;
 float player_rotate = 0;
 GLuint sunTextureID;
 GLuint personTextureID;
@@ -87,10 +87,12 @@ void Update() {
     float ticks = (float)SDL_GetTicks()/1000.0f;
     float deltaTime = ticks - lastTicks;
     lastTicks = ticks;
-    
     player_x += 1.0f * deltaTime;
     player_rotate += 90.0f * deltaTime;
-    personMatrix = glm::translate(personMatrix, glm::vec3(player_x, 0.0f, 0.0f));
+    personMatrix = glm::mat4(1.0f);
+    personMatrix = glm::translate(personMatrix, glm::vec3(player_x, -3.0f, 0.0f));
+    sunMatrix = glm::mat4(1.0f);
+    sunMatrix = glm::translate(sunMatrix, glm::vec3(4.0f, 3.0f, 0.0f));
     sunMatrix = glm::rotate(sunMatrix, glm::radians(player_rotate), glm::vec3(0.0f, 0.0f, 1.0f));
 }
 
