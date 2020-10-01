@@ -49,7 +49,12 @@ void Initialize() {
     
     ball_movement.x = 0.4f;
     ball_movement.y = 0.6f;
-    
+    right_position.x = 4.75f;
+    left_position.x = -4.75f;
+    rightMatrix = glm::mat4(1.0f);
+    rightMatrix = glm::translate(rightMatrix, right_position);
+    leftMatrix = glm::mat4(1.0f);
+    leftMatrix = glm::translate(leftMatrix, left_position);
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 
 }
@@ -166,14 +171,13 @@ void Render() {
     glEnableVertexAttribArray(program.positionAttribute);
     DrawBall();
    
-    float verticesLeft[] = { -5.0, -1.0, -4.5, -1.0, -4.5, 1.0, -5.0, -1.0, -4.5, 1.0, -5.0, 1.0 };
-    glVertexAttribPointer(program.positionAttribute, 2, GL_FLOAT, false, 0, verticesLeft);
+    float paddleVertices[] = { -0.25, -1.0, 0.25, -1.0, 0.25, 1.0, -0.25, -1.0, 0.25, 1.0, -0.25, 1.0 };
+    glVertexAttribPointer(program.positionAttribute, 2, GL_FLOAT, false, 0, paddleVertices);
     glEnableVertexAttribArray(program.positionAttribute);
     DrawLeft();
     
     
-    float verticesRight[] = { 4.5, -1.0, 5.0, -1.0, 5.0, 1.0, 4.5, -1.0, 5.0, 1.0, 4.5, 1.0 };
-    glVertexAttribPointer(program.positionAttribute, 2, GL_FLOAT, false, 0, verticesRight);
+    glVertexAttribPointer(program.positionAttribute, 2, GL_FLOAT, false, 0, paddleVertices);
     glEnableVertexAttribArray(program.positionAttribute);
     DrawRight();
 
