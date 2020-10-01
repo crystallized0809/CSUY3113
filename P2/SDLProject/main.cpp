@@ -16,14 +16,11 @@
 SDL_Window* displayWindow;
 bool gameIsRunning = true;
 bool start = false;
+bool end = false;
 ShaderProgram program;
 glm::mat4 viewMatrix, leftMatrix, rightMatrix, ballMatrix, projectionMatrix;
-
 glm::vec3 left_position, left_movement, right_position, right_movement, ball_position, ball_movement;
-
-float player_speed = 1.0f;
-
-
+float player_speed = 2.0f;
 
 void Initialize() {
     SDL_Init(SDL_INIT_VIDEO);
@@ -37,7 +34,7 @@ void Initialize() {
     
     glViewport(0, 0, 640, 480);
     
-    program.Load("shaders/vertex_textured.glsl", "shaders/fragment.glsl");
+    program.Load("shaders/vertex.glsl", "shaders/fragment.glsl");
     
     viewMatrix = glm::mat4(1.0f);
     leftMatrix = glm::mat4(1.0f);
@@ -47,8 +44,11 @@ void Initialize() {
     
     program.SetProjectionMatrix(projectionMatrix);
     program.SetViewMatrix(viewMatrix);
-    program.SetColor(1.0f, 0.0f, 0.0f, 1.0f);
+    program.SetColor(1.0f, 1.0f, 1.0f, 1.0f);
     glUseProgram(program.programID);
+    
+    ball_movement.x = 0.4f;
+    ball_movement.y = 0.6f;
     
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 
@@ -67,7 +67,7 @@ void ProcessInput() {
             case SDL_KEYDOWN:
                 switch (event.key.keysym.sym) {
                     case SDLK_SPACE:
-                        // Move the player left
+                        // Start the game
                         start = true;
                 }
                 break; // SDL_KEYDOWN
@@ -94,18 +94,56 @@ void ProcessInput() {
     }
 }
 
+void bounce(){
+    float xdistLeft = fabs(left_position.x - ball_position.x) - (0.55f);
+    float ydistLeft = fabs(left_position.y - ball_position.y) - (2.5f / 2.0f);
+    float xdistRight = fabs(right_position.x - ball_position.x) - (0.55f);
+    float ydistRight = fabs(right_position.y - ball_position.y) - (2.5f / 2.0f);
+    if ((xdistLeft < 0 && ydistLeft < 0) || (xdistRight < 0 && ydistRight < 0)){ // Colliding!
+        ball_movement.x *= -1.0f;
+        ball_movement.y *= -1.0f;
+    }
+    else if (ball_position.y >= 3.5f || ball_position.y <= -3.5f){
+        ball_movement.y *= -1.0f;
+    }
+    else if (ball_position.x >= 4.75 || ball_position.x <= -4.75){
+        end = true;
+        start = false;
+    }
+}
 float lastTicks = 0.0f;
 void Update() {
     float ticks = (float)SDL_GetTicks() / 1000.0f;
     float deltaTime = ticks - lastTicks;
     lastTicks = ticks;
     // Add (direction * units per second * elapsed time)
-    left_position += left_movement * player_speed * deltaTime;
-    leftMatrix = glm::mat4(1.0f);
-    leftMatrix = glm::translate(leftMatrix, left_position);
-    right_position += right_movement * player_speed * deltaTime;
-    rightMatrix = glm::mat4(1.0f);
-    rightMatrix = glm::translate(rightMatrix, right_position);
+    if (!end){
+        left_position += left_movement * player_speed * deltaTime;
+        if (left_position.y < 2.75 && left_position.y > -2.75){
+            leftMatrix = glm::mat4(1.0f);
+            leftMatrix = glm::translate(leftMatrix, left_position);
+        }
+        else{
+            left_position -= left_movement * player_speed * deltaTime;
+        }
+        right_position += right_movement * player_speed * deltaTime;
+        if (right_position.y < 2.75 && right_position.y > -2.75){
+            rightMatrix = glm::mat4(1.0f);
+            rightMatrix = glm::translate(rightMatrix, right_position);
+        }
+        else{
+            right_position -= right_movement * player_speed * deltaTime;
+        }
+        if(start){
+            ball_position += ball_movement * 3.0f * deltaTime;
+            bounce();
+            if (!end){
+                ballMatrix = glm::mat4(1.0f);
+                ballMatrix = glm::translate(ballMatrix, ball_position);
+            }
+            
+        }
+    }
 }
 
 void DrawLeft(){
