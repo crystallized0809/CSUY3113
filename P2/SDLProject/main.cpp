@@ -106,7 +106,6 @@ void bounce(){
     float ydistRight = fabs(right_position.y - ball_position.y) - (2.5f / 2.0f);
     if ((xdistLeft < 0 && ydistLeft < 0) || (xdistRight < 0 && ydistRight < 0)){ // Colliding!
         ball_movement.x *= -1.0f;
-        ball_movement.y *= -1.0f;
     }
     else if (ball_position.y >= 3.5f || ball_position.y <= -3.5f){
         ball_movement.y *= -1.0f;
@@ -140,7 +139,7 @@ void Update() {
             right_position -= right_movement * player_speed * deltaTime;
         }
         if(start){
-            ball_position += ball_movement * 3.0f * deltaTime;
+            ball_position += ball_movement * 4.0f * deltaTime;
             bounce();
             if (!end){
                 ballMatrix = glm::mat4(1.0f);
