@@ -11,7 +11,7 @@
 		BA18E0FE253A1EA400DA77F9 /* font1.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA18E0FD253A1EA100DA77F9 /* font1.png */; };
 		BA18E100253A232200DA77F9 /* ship.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA18E0FF253A231300DA77F9 /* ship.png */; };
 		BA18E102253A254100DA77F9 /* wall.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA18E101253A251800DA77F9 /* wall.png */; };
-		BA18E104253A258C00DA77F9 /* gate.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA18E103253A258200DA77F9 /* gate.png */; };
+		BA18E106253B74E200DA77F9 /* platformPack_tile013.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA18E105253B74D900DA77F9 /* platformPack_tile013.png */; };
 		BA452D25251172CF00892997 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA452D24251172CF00892997 /* main.cpp */; };
 		DBDF1B5E2323DE8D007CECB1 /* ShaderProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DBDF1B5D2323DE8D007CECB1 /* ShaderProgram.cpp */; };
 		DBDF1B612323DE9E007CECB1 /* shaders in CopyFiles */ = {isa = PBXBuildFile; fileRef = DBDF1B5C2323DE8D007CECB1 /* shaders */; };
@@ -33,7 +33,7 @@
 				BA18E0FE253A1EA400DA77F9 /* font1.png in CopyFiles */,
 				BA18E100253A232200DA77F9 /* ship.png in CopyFiles */,
 				BA18E102253A254100DA77F9 /* wall.png in CopyFiles */,
-				BA18E104253A258C00DA77F9 /* gate.png in CopyFiles */,
+				BA18E106253B74E200DA77F9 /* platformPack_tile013.png in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,7 +45,7 @@
 		BA18E0FD253A1EA100DA77F9 /* font1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = font1.png; sourceTree = "<group>"; };
 		BA18E0FF253A231300DA77F9 /* ship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ship.png; sourceTree = "<group>"; };
 		BA18E101253A251800DA77F9 /* wall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wall.png; sourceTree = "<group>"; };
-		BA18E103253A258200DA77F9 /* gate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gate.png; sourceTree = "<group>"; };
+		BA18E105253B74D900DA77F9 /* platformPack_tile013.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = platformPack_tile013.png; sourceTree = "<group>"; };
 		BA452D24251172CF00892997 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		DBDF1B4F2323DE3F007CECB1 /* SDLProject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SDLProject; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBDF1B592323DE8D007CECB1 /* ShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderProgram.h; sourceTree = "<group>"; };
@@ -96,7 +96,7 @@
 		DBDF1B512323DE3F007CECB1 /* SDLProject */ = {
 			isa = PBXGroup;
 			children = (
-				BA18E103253A258200DA77F9 /* gate.png */,
+				BA18E105253B74D900DA77F9 /* platformPack_tile013.png */,
 				BA18E101253A251800DA77F9 /* wall.png */,
 				BA18E0FF253A231300DA77F9 /* ship.png */,
 				BA18E0FD253A1EA100DA77F9 /* font1.png */,

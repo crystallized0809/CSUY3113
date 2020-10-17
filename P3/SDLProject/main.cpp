@@ -27,7 +27,6 @@ GameState state;
 GLuint fontTextureID;
 SDL_Window* displayWindow;
 bool gameIsRunning = true;
-bool winStatus = false;
 ShaderProgram program;
 glm::mat4 viewMatrix, modelMatrix, projectionMatrix;
 
@@ -169,7 +168,7 @@ void Initialize() {
     
     //initiailize gates
     state.gates = new Entity[GATE_COUNT];
-    GLuint gateTextureID = LoadTexture("gate.png");
+    GLuint gateTextureID = LoadTexture("platformPack_tile013.png");
     state.gates[0].position = glm::vec3(0.5, -3.25, 0);
     state.gates[1].position = glm::vec3(1.5, -3.25, 0);
     for(int i = 0; i < GATE_COUNT; i++){
@@ -219,9 +218,8 @@ void ProcessInput() {
         state.player->acceleration.x = 1.0f;
     }
     
-    
-    if (glm::length(state.player->movement) > 1.0f) {
-        state.player->movement = glm::normalize(state.player->movement);
+    if (glm::length(state.player->acceleration) > 1.0f) {
+        state.player->acceleration = glm::normalize(state.player->acceleration);
     }
     
 }
@@ -255,15 +253,12 @@ void Render() {
     for(int i = 0; i < PLATFORM_COUNT; i++){
         state.platforms[i].Render(&program);
     }
-    
     state.player->Render(&program);
-    if (!gameIsRunning){
-        if (winStatus){
-            DrawText(&program, fontTextureID, "Mission Successful", 1, -0.5f, glm::vec3(0, 0, 0));
-        }
-        else{
-            DrawText(&program, fontTextureID, "Mission Failed", 1, -0.5f, glm::vec3(0, 0, 0));
-        }
+    if (state.player->lastCollision == GATE){
+        DrawText(&program, fontTextureID, "Mission Successful", 1, -0.5f, glm::vec3(-3, 0, 0));
+    }
+    else if (state.player->lastCollision == WALL){
+        DrawText(&program, fontTextureID, "Mission Failed", 1, -0.5f, glm::vec3(-3, 0, 0));
     }
     SDL_GL_SwapWindow(displayWindow);
 }
