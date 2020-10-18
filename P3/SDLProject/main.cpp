@@ -15,14 +15,12 @@
 #include "stb_image.h"
 
 #include "Entity.h"
-#define PLATFORM_COUNT 30
-#define GATE_COUNT 2
+#define PLATFORM_COUNT 32
 struct GameState {
     Entity *player;
     Entity *platforms;
-    Entity *gates;
 };
-
+bool gameEnd = false;
 GameState state;
 GLuint fontTextureID;
 SDL_Window* displayWindow;
@@ -127,13 +125,13 @@ void Initialize() {
     state.player = new Entity();
     state.player->position = glm::vec3(0);
     state.player->movement = glm::vec3(0);
-    state.player->acceleration = glm::vec3(0, -0.75, 0);
+    state.player->acceleration = glm::vec3(0, -0.5, 0);
     state.player->speed = 1.5f;
     state.player->textureID = LoadTexture("ship.png");
     state.player->animFrames = 4;
     state.player->animIndex = 0;
     state.player->animTime = 0;
-    state.player->type = SHIP;
+    state.player->entityType = SHIP;
     state.player -> height = 0.8f;
     state.player -> width = 0.8f;
     state.player -> position = glm::vec3(-2.5, 3, 0);
@@ -145,36 +143,56 @@ void Initialize() {
     GLuint platformTextureID = LoadTexture("wall.png");
     for(int i = 0; i < 10; i++){
         state.platforms[i].position = glm::vec3(-4.5, -3.25+(1*i), 0);
+        state.platforms[i].textureID = platformTextureID;
+        state.platforms[i].entityType = WALL;
     }
     for(int i = 0; i < 10; i++){
         state.platforms[10+i].position = glm::vec3(4.5, -3.25+(1*i), 0);
+        state.platforms[10+i].textureID = platformTextureID;
+        state.platforms[10+i].entityType = WALL;
     }
     state.platforms[20].position = glm::vec3(-3.5, -3.25, 0);
+    state.platforms[20].textureID = platformTextureID;
+    state.platforms[20].entityType = WALL;
     state.platforms[21].position = glm::vec3(-2.5, -3.25, 0);
+    state.platforms[21].textureID = platformTextureID;
+    state.platforms[21].entityType = WALL;
     state.platforms[22].position = glm::vec3(-1.5, -3.25, 0);
+    state.platforms[22].textureID = platformTextureID;
+    state.platforms[22].entityType = WALL;
     state.platforms[23].position = glm::vec3(-0.5, -3.25, 0);
+    state.platforms[23].textureID = platformTextureID;
+    state.platforms[23].entityType = WALL;
     state.platforms[24].position = glm::vec3(2.5, -3.25, 0);
+    state.platforms[24].textureID = platformTextureID;
+    state.platforms[24].entityType = WALL;
     state.platforms[25].position = glm::vec3(3.5, -3.25, 0);
+    state.platforms[25].textureID = platformTextureID;
+    state.platforms[25].entityType = WALL;
     state.platforms[26].position = glm::vec3(-3.5, 0.75, 0);
+    state.platforms[26].textureID = platformTextureID;
+    state.platforms[26].entityType = WALL;
     state.platforms[27].position = glm::vec3(-2.5, 0.75, 0);
+    state.platforms[27].textureID = platformTextureID;
+    state.platforms[27].entityType = WALL;
     state.platforms[28].position = glm::vec3(1.5, 0.0, 0);
+    state.platforms[28].textureID = platformTextureID;
+    state.platforms[28].entityType = WALL;
     state.platforms[29].position = glm::vec3(2.5, 0.0, 0);
+    state.platforms[29].textureID = platformTextureID;
+    state.platforms[29].entityType = WALL;
+    
+    //initiailize gates (or platforms)
+    GLuint gateTextureID = LoadTexture("platformPack_tile013.png");
+    state.platforms[30].position = glm::vec3(0.5, -3.25, 0);
+    state.platforms[30].textureID = gateTextureID;
+    state.platforms[30].entityType = GATE;
+    state.platforms[31].position = glm::vec3(1.5, -3.25, 0);
+    state.platforms[31].textureID = gateTextureID;
+    state.platforms[31].entityType = GATE;
     
     for(int i = 0; i < PLATFORM_COUNT; i++){
-        state.platforms[i].textureID = platformTextureID;
-        state.platforms[i].type = WALL;
         state.platforms[i].Update(0, NULL, 0);
-    }
-    
-    //initiailize gates
-    state.gates = new Entity[GATE_COUNT];
-    GLuint gateTextureID = LoadTexture("platformPack_tile013.png");
-    state.gates[0].position = glm::vec3(0.5, -3.25, 0);
-    state.gates[1].position = glm::vec3(1.5, -3.25, 0);
-    for(int i = 0; i < GATE_COUNT; i++){
-        state.gates[i].textureID = gateTextureID;
-        state.gates[i].type = GATE;
-        state.gates[i].Update(0, NULL, 0);
     }
     
     
@@ -212,14 +230,18 @@ void ProcessInput() {
     const Uint8 *keys = SDL_GetKeyboardState(NULL);
     
     if (keys[SDL_SCANCODE_LEFT]) {
-        state.player->acceleration.x = -1.0f;
+        if(!gameEnd){
+            state.player->acceleration.x += -1.0f;
+        }
     }
     else if (keys[SDL_SCANCODE_RIGHT]) {
-        state.player->acceleration.x = 1.0f;
+        if(!gameEnd){
+            state.player->acceleration.x += 1.0f;
+        }
     }
     
-    if (glm::length(state.player->acceleration) > 1.0f) {
-        state.player->acceleration = glm::normalize(state.player->acceleration);
+    if (glm::length(state.player->movement) > 1.0f) {
+        state.player->movement = glm::normalize(state.player->movement);
     }
     
 }
@@ -255,10 +277,14 @@ void Render() {
     }
     state.player->Render(&program);
     if (state.player->lastCollision == GATE){
-        DrawText(&program, fontTextureID, "Mission Successful", 1, -0.5f, glm::vec3(-3, 0, 0));
+        DrawText(&program, fontTextureID, "Mission Successful", 1, -0.5f, glm::vec3(-4, 0, 0));
+        gameEnd = true;
+        state.player-> acceleration = glm::vec3(0);
     }
     else if (state.player->lastCollision == WALL){
         DrawText(&program, fontTextureID, "Mission Failed", 1, -0.5f, glm::vec3(-3, 0, 0));
+        gameEnd = true;
+        state.player-> acceleration = glm::vec3(0);
     }
     SDL_GL_SwapWindow(displayWindow);
 }

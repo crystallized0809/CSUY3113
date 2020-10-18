@@ -19,7 +19,6 @@ public:
     glm::vec3 acceleration;
     glm::vec3 velocity;
     float speed;
-    EntityType type;
     EntityType lastCollision;
     float width = 1;
     float height = 1;
