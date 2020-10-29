@@ -68,31 +68,25 @@ void Entity::CheckCollisionsX(Entity *objects, int objectCount)
     }
 }
 void Entity::AIWalker(){
-    if (position.x >= -3 && position.x <= 4){
-        movement = glm::vec3(-1, 0, 0);
+    if (position.x > 4.5 || position.x < -3){
+        movement = glm::vec3(movement.x*-1, 0, 0);
     }
-    else{
-        movement = glm::vec3(1, 0, 0);
-    }
-    
 }
 void Entity::Patrol(Entity *player){
     switch (aiState){
         case IDLE:
             break;
         case WALKING:
-           
-            if (glm::distance(position, player->position) < 3.0f){
+             if (glm::distance(position, player->position) < 3.0f){
                 aiState = ATTACKING;
             }
             break;
         case ATTACKING:
-             movement = glm::vec3(1,0,0);
-//            if (player->position.x < position.x){
-//                movement = glm::vec3(-1, 0, 0);
-//            }else{
-//                movement = glm::vec3(1, 0, 0);
-//            }
+            if (player->position.x < position.x){
+                movement = glm::vec3(-1, 0, 0);
+            }else{
+                movement = glm::vec3(1, 0, 0);
+            }
             break;
     }
 }
@@ -107,7 +101,9 @@ void Entity::Jumper(Entity *player){
             }
             break;
         case ATTACKING:
-            jump = true;
+            if(collidedBottom){
+                jump = true;
+            }
             if (player->position.x < position.x){
                 movement = glm::vec3(-1, 0, 0);
             }else{

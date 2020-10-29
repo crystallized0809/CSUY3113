@@ -184,20 +184,23 @@ void Initialize() {
         state.enemies[i].entityType = ENEMY;
         state.enemies[i].textureID = enemyTextureID;
         state.enemies[i].acceleration = glm::vec3(0, -9.81, 0);
+        state.player->movement = glm::vec3(0);
         state.enemies[i].speed = 0.5;
         state.enemies[i].width = 0.8f;
     }
     state.enemies[0].position = glm::vec3(4, -2.25f, 0);
     state.enemies[0].aiType = WALKER;
+    state.enemies[0].movement = glm::vec3(-1, 0, 0);
     
     state.enemies[1].position = glm::vec3(1.5f, 2.75f, 0);
     state.enemies[1].aiType = JUMPER;
     state.enemies[1].aiState = WALKING;
     state.enemies[1].jumpPower = 3;
     
-    state.enemies[2].position = glm::vec3(-2, -0.25f, 0);
+    state.enemies[2].position = glm::vec3(2, -0.25f, 0);
     state.enemies[2].aiType = PATROL;
     state.enemies[2].aiState = WALKING;
+    state.enemies[2].movement = glm::vec3(1, 0, 0);
 }
 
 void ProcessInput() {
