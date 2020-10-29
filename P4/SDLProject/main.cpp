@@ -264,7 +264,9 @@ void Update() {
         // Update. Notice it's FIXED_TIMESTEP. Not deltaTime
         state.player->Update(FIXED_TIMESTEP, state.player, state.platforms, PLATFORM_COUNT, state.enemies, ENEMY_COUNT);
         for(int i = 0; i < ENEMY_COUNT; i++){
-            state.enemies[i].Update(FIXED_TIMESTEP, state.player, state.platforms, PLATFORM_COUNT, state.enemies, ENEMY_COUNT);
+            if(state.enemies[i].alive){
+                state.enemies[i].Update(FIXED_TIMESTEP, state.player, state.platforms, PLATFORM_COUNT, state.enemies, ENEMY_COUNT);
+            }
         }
         deltaTime -= FIXED_TIMESTEP;
         
@@ -280,7 +282,9 @@ void Render() {
         state.platforms[i].Render(&program);
     }
     for(int i = 0; i < ENEMY_COUNT; i++){
-        state.enemies[i].Render(&program);
+        if(state.enemies[i].alive){
+            state.enemies[i].Render(&program);
+        }
     }
     
     state.player->Render(&program);
