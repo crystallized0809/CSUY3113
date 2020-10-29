@@ -135,9 +135,6 @@ void Entity::Update(float deltaTime, Entity *player, Entity *platforms, int plat
     collidedLeft = false;
     collidedRight = false;
     
-    if (entityType == ENEMY){
-        AI(player);
-    }
     if (animIndices != NULL) {
         if (glm::length(movement) != 0) {
             animTime += deltaTime;
@@ -169,12 +166,15 @@ void Entity::Update(float deltaTime, Entity *player, Entity *platforms, int plat
     position.x += velocity.x * deltaTime; // Move on X
     CheckCollisionsX(platforms, platformCount);// Fix if needed
     CheckCollisionsX(enemies, enemyCount);
+    if (entityType == ENEMY){
+        AI(player);
+    }
     if (entityType == PLAYER && lastCollision != nullptr){
         if(lastCollision->entityType == ENEMY){
             if(collidedTop || collidedLeft || collidedRight){
                 alive = false;
             }
-            if(collidedBottom){
+            else if(collidedBottom){
                 lastCollision->alive = false;
             }
         }
