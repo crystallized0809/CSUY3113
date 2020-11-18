@@ -5,6 +5,7 @@
 #endif
 #include <SDL_mixer.h>
 #define GL_GLEXT_PROTOTYPES 1
+#include <iostream>
 #include <SDL.h>
 #include <SDL_opengl.h>
 #include "glm/mat4x4.hpp"
@@ -18,7 +19,6 @@
 #include "Level1.h"
 #include "Level2.h"
 #include "Level3.h"
-
 Mix_Chunk *jump;
 Mix_Music *music;
 GLuint fontTextureID;
@@ -29,9 +29,12 @@ glm::mat4 viewMatrix, modelMatrix, projectionMatrix;
 Scene *currentScene;
 Scene *sceneList[3];
 bool menu = true;
-void SwitchToScene(Scene *scene) {
+void SwitchToScene(Scene *scene, int previousLives) {
     currentScene = scene;
     currentScene->Initialize();
+    std::cout << "PreviousLives: " << previousLives;
+    currentScene->state.player->lives = previousLives;
+    std::cout << "CurrentLives: " << currentScene->state.player->lives;
 }
 void Initialize() {
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
@@ -97,7 +100,7 @@ void ProcessInput() {
                         break;
                     case SDLK_RETURN:
                         if (menu){
-                            SwitchToScene(sceneList[0]);
+                            SwitchToScene(sceneList[0], 3);
                             menu = false;
                         }
                         break;
@@ -179,6 +182,7 @@ void Render() {
         Util::DrawText(&program, fontTextureID, "George's Adventure", 1, -0.5f, glm::vec3(-4.25f, 2, 0));
         Util::DrawText(&program, fontTextureID, "Press Enter to Start", 0.75, -0.5f, glm::vec3(-2.5f, -1, 0));
     }
+
     /*
     if(state.player->alive && success){
         Util::DrawText(&program, fontTextureID, "YOU WIN!", 1, -0.5f, glm::vec3(-4.25f, 3, 0));
@@ -201,10 +205,10 @@ int main(int argc, char* argv[]) {
     while (gameIsRunning) {
         ProcessInput();
         Update();
-        if(!menu){
-            if(currentScene -> state.nextScene >= 0) SwitchToScene(sceneList[currentScene->state.nextScene]);
-        }
         Render();
+        if(!menu){
+            if(currentScene -> state.nextScene >= 0) SwitchToScene(sceneList[currentScene->state.nextScene], currentScene -> state.player->lives);
+        }
     }
     
     Shutdown();

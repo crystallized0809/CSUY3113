@@ -49,7 +49,7 @@ void Level1::Initialize() {
         state.enemies[i].entityType = ENEMY;
         state.enemies[i].textureID = enemyTextureID;
         state.enemies[i].acceleration = glm::vec3(0, -9.81, 0);
-        state.player->movement = glm::vec3(0);
+        state.enemies[i].movement = glm::vec3(0);
         state.enemies[i].speed = 0.5;
         state.enemies[i].width = 0.8f;
     }
@@ -66,14 +66,14 @@ void Level1::Update(float deltaTime) {
     }
     state.player->Update(deltaTime, state.player, state.enemies, LEVEL1_ENEMY_COUNT, state.map);
     
-    if(state.player->position.x >= 15){
+    if(state.player->position.x >= 12){
         state.nextScene = 1;
     }
 }
 void Level1::Render(ShaderProgram *program) {
     state.map->Render(program);
     state.player->Render(program);
-     for(int i = 0; i < LEVEL1_ENEMY_COUNT; i++){
-         state.enemies[i].Render(program);
-     }
+    for(int i = 0; i < LEVEL1_ENEMY_COUNT; i++){
+     state.enemies[i].Render(program);
+    }
 }

@@ -234,7 +234,7 @@ void Entity::Update(float deltaTime, Entity *player, Entity *enemies, int enemyC
     if (entityType == PLAYER && lastCollision != nullptr){
         if(lastCollision->entityType == ENEMY){
             if(collidedTop || collidedLeft || collidedRight){
-                alive = false;
+                lives -= 1;
             }
             else if(collidedBottom){
                 lastCollision->alive = false;
