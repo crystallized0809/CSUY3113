@@ -251,6 +251,11 @@ void Entity::Update(float deltaTime, Entity *player, Entity *enemies, int enemyC
             }
         }
     }
+    if (entityType == PLAYER){
+        if (position.y < -10){
+            alive = false;
+        }
+    }
     modelMatrix = glm::mat4(1.0f);
     modelMatrix = glm::translate(modelMatrix, position);
 }
