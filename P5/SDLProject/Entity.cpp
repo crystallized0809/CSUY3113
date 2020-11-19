@@ -83,31 +83,37 @@ void Entity::CheckCollisionsY(Map *map)
         position.y -= penetration_y;
         velocity.y = 0;
         collidedTop = true;
+        lastCollision = nullptr;
     }
     else if (map->IsSolid(top_left, &penetration_x, &penetration_y) && velocity.y > 0) {
         position.y -= penetration_y;
         velocity.y = 0;
         collidedTop = true;
+        lastCollision = nullptr;
     }
     else if (map->IsSolid(top_right, &penetration_x, &penetration_y) && velocity.y > 0) {
         position.y -= penetration_y;
         velocity.y = 0;
         collidedTop = true;
+        lastCollision = nullptr;
     }
     if (map->IsSolid(bottom, &penetration_x, &penetration_y) && velocity.y < 0) {
         position.y += penetration_y;
         velocity.y = 0;
         collidedBottom = true;
+        lastCollision = nullptr;
     }
     else if (map->IsSolid(bottom_left, &penetration_x, &penetration_y) && velocity.y < 0) {
         position.y += penetration_y;
         velocity.y = 0;
         collidedBottom = true;
+        lastCollision = nullptr;
     }
     else if (map->IsSolid(bottom_right, &penetration_x, &penetration_y) && velocity.y < 0) {
         position.y += penetration_y;
         velocity.y = 0;
         collidedBottom = true;
+        lastCollision = nullptr;
     }
 }
 void Entity::CheckCollisionsX(Map *map)
@@ -121,11 +127,13 @@ void Entity::CheckCollisionsX(Map *map)
         position.x += penetration_x;
         velocity.x = 0;
         collidedLeft = true;
+        lastCollision = nullptr;
     }
     if (map->IsSolid(right, &penetration_x, &penetration_y) && velocity.x > 0) {
         position.x -= penetration_x;
         velocity.x = 0;
         collidedRight = true;
+        lastCollision = nullptr;
     }
 }
 
@@ -232,12 +240,14 @@ void Entity::Update(float deltaTime, Entity *player, Entity *enemies, int enemyC
         AI(player);
     }
     if (entityType == PLAYER && lastCollision != nullptr){
-        if(lastCollision->entityType == ENEMY){
-            if(collidedTop || collidedLeft || collidedRight){
-                lives -= 1;
-            }
-            else if(collidedBottom){
-                lastCollision->alive = false;
+        if(lastCollision){
+            if (lastCollision->entityType == ENEMY){
+                if(collidedTop || collidedLeft || collidedRight){
+                    alive = false;
+                }
+                else if(collidedBottom){
+                    lastCollision->alive = false;
+                }
             }
         }
     }

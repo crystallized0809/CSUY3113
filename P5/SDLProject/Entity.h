@@ -36,7 +36,6 @@ public:
     GLuint textureID;
     
     glm::mat4 modelMatrix;
-    int lives;
     int *animRight = NULL;
     int *animLeft = NULL;
     int *animUp = NULL;
