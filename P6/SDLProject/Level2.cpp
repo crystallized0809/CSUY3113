@@ -40,7 +40,6 @@ void Level2::Initialize() {
     
     state.player -> height = 0.9f;
     state.player -> width = 0.8f;
-    state.player -> jumpPower = 5.0f;
     
     //initialize enemies
     state.enemies = new Entity[LEVEL2_ENEMY_COUNT];
@@ -58,18 +57,17 @@ void Level2::Initialize() {
     state.enemies[0].aiState = WALKING;
     state.enemies[0].movement = glm::vec3(-1, 0, 0);
     state.enemies[1].position = glm::vec3(9, 0, 0);
-    state.enemies[1].aiType = JUMPER;
+    state.enemies[1].aiType = WALKER;
     state.enemies[1].aiState = WALKING;
-    state.enemies[1].jumpPower = 3;
 
 }
 void Level2::Update(float deltaTime) {
     for(int i = 0; i < LEVEL2_ENEMY_COUNT; i++){
         if(state.enemies[i].alive){
-            state.enemies[i].Update(deltaTime, state.player, state.enemies, LEVEL2_ENEMY_COUNT, state.map);
+            state.enemies[i].Update(deltaTime, state.player, state.enemies, state.coins, state.queen, LEVEL2_ENEMY_COUNT, state.map);
         }
     }
-    state.player->Update(deltaTime, state.player, state.enemies, LEVEL2_ENEMY_COUNT, state.map);
+    state.player->Update(deltaTime, state.player, state.enemies, state.coins, state.queen, LEVEL2_ENEMY_COUNT, state.map);
     if(state.player->position.x >= 12){
         state.nextScene = 2;
     }

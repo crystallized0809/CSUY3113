@@ -16,6 +16,8 @@ struct GameState {
     Map *map;
     Entity *player;
     Entity *enemies;
+    Entity *coins;
+    Entity *queen;
     int nextScene;
 };
 class Scene {

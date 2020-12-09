@@ -161,28 +161,6 @@ void Entity::Patrol(Entity *player){
     }
 }
 
-void Entity::Jumper(Entity *player){
-    switch (aiState){
-        case IDLE:
-            break;
-        case WALKING:
-            if (glm::distance(position, player->position) < 3.0f){
-                aiState = ATTACKING;
-            }
-            break;
-        case ATTACKING:
-            if(collidedBottom){
-                jump = true;
-            }
-            if (player->position.x < position.x){
-                movement = glm::vec3(-1, 0, 0);
-            }else{
-                movement = glm::vec3(1, 0, 0);
-            }
-            break;
-    }
-}
-
 void Entity::AI(Entity *player){
     switch(aiType){
         case WALKER:
@@ -191,13 +169,10 @@ void Entity::AI(Entity *player){
         case PATROL:
             Patrol(player);
             break;
-        case JUMPER:
-            Jumper(player);
-            break;
     }
 }
 
-void Entity::Update(float deltaTime, Entity *player, Entity *enemies, int enemyCount, Map* map)
+void Entity::Update(float deltaTime, Entity *player, Entity *enemies, Entity *coins, Entity *queen, int enemyCount, Map* map)
 {
     if(isActive == false || alive == false) return;
     collidedTop = false;
@@ -222,39 +197,35 @@ void Entity::Update(float deltaTime, Entity *player, Entity *enemies, int enemyC
             animIndex = 0;
         }
     }
-    if(jump){
-        jump = false;
-        velocity.y += jumpPower;
-    }
-    
     velocity.x = movement.x * speed;
-    velocity += acceleration * deltaTime;
-    
+    velocity.y = movement.y * speed;
     position.y += velocity.y * deltaTime; // Move on Y
     CheckCollisionsY(map);// Fix if needed
     CheckCollisionsY(enemies, enemyCount);
+    CheckCollisionsY(coins, 5);
     position.x += velocity.x * deltaTime; // Move on X
     CheckCollisionsX(map);// Fix if needed
     CheckCollisionsX(enemies, enemyCount);
+    CheckCollisionsX(coins, 5);
     if (entityType == ENEMY){
         AI(player);
     }
     if (entityType == PLAYER && lastCollision != nullptr){
-        if(lastCollision){
-            if (lastCollision->entityType == ENEMY){
-                if(collidedTop || collidedLeft || collidedRight){
-                    alive = false;
-                }
-                else if(collidedBottom){
-                    lastCollision->alive = false;
-                }
+        if (lastCollision->entityType == ENEMY){
+            if(collidedTop || collidedLeft || collidedRight){
+                alive = false;
+            }
+            else if(collidedBottom){
+                lastCollision->alive = false;
             }
         }
-    }
-    if (entityType == PLAYER){
-        if (position.y < -10){
-            alive = false;
+        if (lastCollision->entityType == COIN){
+            if(collidedTop || collidedLeft || collidedRight || collidedBottom){
+                lastCollision->isActive = false;
+            }
+            coinsCollected++;
         }
+        
     }
     modelMatrix = glm::mat4(1.0f);
     modelMatrix = glm::translate(modelMatrix, position);

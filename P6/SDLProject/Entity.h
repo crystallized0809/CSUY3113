@@ -12,8 +12,8 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "ShaderProgram.h"
 #include "Map.h"
-enum EntityType {PLAYER, PLATFORM, ENEMY};
-enum AIType {WALKER, PATROL, JUMPER};
+enum EntityType {PLAYER, PLATFORM, ENEMY, COIN, QUEEN};
+enum AIType {WALKER, PATROL};
 enum AIState {IDLE, WALKING, ATTACKING};
 class Entity {
 public:
@@ -31,8 +31,6 @@ public:
     
     float width = 1;
     float height = 1;
-    bool jump = false;
-    float jumpPower = 0;
     GLuint textureID;
     
     glm::mat4 modelMatrix;
@@ -52,9 +50,9 @@ public:
     bool collidedBottom = false;
     bool collidedLeft = false;
     bool collidedRight = false;
-    
+    int coinsCollected = 0;
     Entity();
-    void Update(float deltaTime, Entity *player, Entity *enemies, int enemyCount, Map* map);
+    void Update(float deltaTime, Entity *player, Entity *enemies, Entity *coins, Entity *queen, int enemyCount, Map* map);
     void Render(ShaderProgram *program);
     void DrawSpriteFromTextureAtlas(ShaderProgram *program, GLuint textureID, int index);
     

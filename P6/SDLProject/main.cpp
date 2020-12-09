@@ -18,8 +18,6 @@
 #include "Scene.h"
 #include "Level1.h"
 #include "Level2.h"
-#include "Level3.h"
-int coins = 0;
 int lives = 3;
 bool gameover = false;
 Mix_Chunk *dead;
@@ -30,7 +28,7 @@ bool gameIsRunning = true;
 ShaderProgram program;
 glm::mat4 viewMatrix, modelMatrix, projectionMatrix;
 Scene *currentScene;
-Scene *sceneList[3];
+Scene *sceneList[2];
 bool menu = true;
 void SwitchToScene(Scene *scene) {
     currentScene = scene;
@@ -73,7 +71,6 @@ void Initialize() {
     fontTextureID = Util::LoadTexture("font.png");
     sceneList[0] = new Level1();
     sceneList[1] = new Level2();
-    sceneList[2] = new Level3();
 }
 
 void ProcessInput() {
@@ -213,7 +210,8 @@ void Render() {
         if(gameover){
             Util::DrawText(&program, fontTextureID, "YOU LOSE!", 1, -0.5f, currentScene->state.player->position);
         }
-        else if (!gameover && currentScene->state.nextScene == 3){
+        //player won't be able to move on to final scene unless they have collected all 5 coins
+        else if (!gameover && currentScene->state.nextScene == 2){
             Util::DrawText(&program, fontTextureID, "YOU WIN!", 1, -0.5f, currentScene->state.player->position);
         }
     }
