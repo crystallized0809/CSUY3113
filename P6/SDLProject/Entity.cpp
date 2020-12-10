@@ -137,9 +137,9 @@ void Entity::CheckCollisionsX(Map *map)
     }
 }
 
-void Entity::AIWalker(){
-    if (position.x > 4.5 || position.x < -3){
-        movement = glm::vec3(movement.x*-1, 0, 0);
+void Entity::AIWalker(Entity *player){
+    if (glm::distance(position, player->position) < 3.0f){
+        movement = glm::vec3(0 ,-1 ,0);
     }
 }
 void Entity::Patrol(Entity *player){
@@ -164,7 +164,7 @@ void Entity::Patrol(Entity *player){
 void Entity::AI(Entity *player){
     switch(aiType){
         case WALKER:
-            AIWalker();
+            AIWalker(player);
             break;
         case PATROL:
             Patrol(player);
@@ -201,31 +201,40 @@ void Entity::Update(float deltaTime, Entity *player, Entity *enemies, Entity *co
     velocity.y = movement.y * speed;
     position.y += velocity.y * deltaTime; // Move on Y
     CheckCollisionsY(map);// Fix if needed
-    CheckCollisionsY(enemies, enemyCount);
-    CheckCollisionsY(coins, 5);
+    if (enemies != NULL) CheckCollisionsY(enemies, enemyCount);
+    if (queen != NULL) CheckCollisionsY(queen, 1);
+    if (coins != NULL) CheckCollisionsY(coins, 10);
     position.x += velocity.x * deltaTime; // Move on X
     CheckCollisionsX(map);// Fix if needed
-    CheckCollisionsX(enemies, enemyCount);
-    CheckCollisionsX(coins, 5);
+    if (enemies != NULL) CheckCollisionsX(enemies, enemyCount);
+    if (queen != NULL) CheckCollisionsX(queen, 1);
+    if (coins != NULL) CheckCollisionsX(coins, 10);
     if (entityType == ENEMY){
         AI(player);
     }
     if (entityType == PLAYER && lastCollision != nullptr){
         if (lastCollision->entityType == ENEMY){
-            if(collidedTop || collidedLeft || collidedRight){
+            //AI can't be killed, so whenever player touches enemy, player dies
+            if(collidedTop || collidedLeft || collidedRight || collidedBottom){
                 alive = false;
-            }
-            else if(collidedBottom){
-                lastCollision->alive = false;
             }
         }
         if (lastCollision->entityType == COIN){
             if(collidedTop || collidedLeft || collidedRight || collidedBottom){
                 lastCollision->isActive = false;
+                flag = true;
             }
-            coinsCollected++;
+            if (flag){
+                coinsCollected++;
+                flag = false;
+            }
         }
-        
+        if (lastCollision->entityType == QUEEN){
+            if(collidedTop || collidedLeft || collidedRight || collidedBottom){
+                std::cout << "sentting missionAccomplished to true" << std::endl;
+                missionAccomplished = true;
+            }
+        }
     }
     modelMatrix = glm::mat4(1.0f);
     modelMatrix = glm::translate(modelMatrix, position);

@@ -15,12 +15,13 @@
 		BA2426CE2565C86300090DA9 /* Level2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA2426CC2565C86300090DA9 /* Level2.cpp */; };
 		BA452D25251172CF00892997 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA452D24251172CF00892997 /* main.cpp */; };
 		BADBB850258131C700EE160E /* font.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BADBB84F258131C700EE160E /* font.png */; };
-		BADBB8522581385500EE160E /* character_sprite.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BADBB8512581385500EE160E /* character_sprite.png */; };
 		BADBB854258138BE00EE160E /* tileset.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BADBB853258138BE00EE160E /* tileset.png */; };
 		BADBB85625813C2E00EE160E /* background.mp3 in CopyFiles */ = {isa = PBXBuildFile; fileRef = BADBB85525813C2E00EE160E /* background.mp3 */; };
 		BADBB8582581406E00EE160E /* dead.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = BADBB8572581406E00EE160E /* dead.wav */; };
 		BADBB85C258158F200EE160E /* enemy.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BADBB85B2581582C00EE160E /* enemy.png */; };
 		BADBB85E25816CD400EE160E /* coin.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BADBB85D25816CCE00EE160E /* coin.png */; };
+		BADBB8602582936C00EE160E /* ada_0.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BADBB85F2582936700EE160E /* ada_0.png */; };
+		BADBB86225829BE700EE160E /* Sara-VT.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = BADBB86125829BE100EE160E /* Sara-VT.png */; };
 		DBDF1B5E2323DE8D007CECB1 /* ShaderProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DBDF1B5D2323DE8D007CECB1 /* ShaderProgram.cpp */; };
 		DBDF1B612323DE9E007CECB1 /* shaders in CopyFiles */ = {isa = PBXBuildFile; fileRef = DBDF1B5C2323DE8D007CECB1 /* shaders */; };
 		DBDF1B632323DEDA007CECB1 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBDF1B622323DEDA007CECB1 /* OpenGL.framework */; };
@@ -37,12 +38,13 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
+				BADBB86225829BE700EE160E /* Sara-VT.png in CopyFiles */,
+				BADBB8602582936C00EE160E /* ada_0.png in CopyFiles */,
 				BADBB85E25816CD400EE160E /* coin.png in CopyFiles */,
 				BADBB85C258158F200EE160E /* enemy.png in CopyFiles */,
 				BADBB8582581406E00EE160E /* dead.wav in CopyFiles */,
 				BADBB85625813C2E00EE160E /* background.mp3 in CopyFiles */,
 				BADBB854258138BE00EE160E /* tileset.png in CopyFiles */,
-				BADBB8522581385500EE160E /* character_sprite.png in CopyFiles */,
 				BADBB850258131C700EE160E /* font.png in CopyFiles */,
 				DBDF1B612323DE9E007CECB1 /* shaders in CopyFiles */,
 			);
@@ -65,12 +67,13 @@
 		BA2426CD2565C86300090DA9 /* Level2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Level2.h; sourceTree = "<group>"; };
 		BA452D24251172CF00892997 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		BADBB84F258131C700EE160E /* font.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = font.png; sourceTree = "<group>"; };
-		BADBB8512581385500EE160E /* character_sprite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = character_sprite.png; sourceTree = "<group>"; };
 		BADBB853258138BE00EE160E /* tileset.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tileset.png; sourceTree = "<group>"; };
 		BADBB85525813C2E00EE160E /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background.mp3; sourceTree = "<group>"; };
 		BADBB8572581406E00EE160E /* dead.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dead.wav; sourceTree = "<group>"; };
 		BADBB85B2581582C00EE160E /* enemy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = enemy.png; sourceTree = "<group>"; };
 		BADBB85D25816CCE00EE160E /* coin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coin.png; sourceTree = "<group>"; };
+		BADBB85F2582936700EE160E /* ada_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ada_0.png; sourceTree = "<group>"; };
+		BADBB86125829BE100EE160E /* Sara-VT.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Sara-VT.png"; sourceTree = "<group>"; };
 		DBDF1B4F2323DE3F007CECB1 /* SDLProject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SDLProject; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBDF1B592323DE8D007CECB1 /* ShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderProgram.h; sourceTree = "<group>"; };
 		DBDF1B5A2323DE8D007CECB1 /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
@@ -120,12 +123,13 @@
 		DBDF1B512323DE3F007CECB1 /* SDLProject */ = {
 			isa = PBXGroup;
 			children = (
+				BADBB86125829BE100EE160E /* Sara-VT.png */,
+				BADBB85F2582936700EE160E /* ada_0.png */,
 				BADBB85D25816CCE00EE160E /* coin.png */,
 				BADBB85B2581582C00EE160E /* enemy.png */,
 				BADBB8572581406E00EE160E /* dead.wav */,
 				BADBB85525813C2E00EE160E /* background.mp3 */,
 				BADBB853258138BE00EE160E /* tileset.png */,
-				BADBB8512581385500EE160E /* character_sprite.png */,
 				BADBB84F258131C700EE160E /* font.png */,
 				DBDF1B5B2323DE8D007CECB1 /* glm */,
 				DBDF1B5D2323DE8D007CECB1 /* ShaderProgram.cpp */,

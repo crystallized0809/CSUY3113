@@ -180,6 +180,7 @@ void Update() {
             if(lives > 1){
                 lives -=1;
                 currentScene -> Initialize();
+                currentScene->state.player->coinsCollected = 0;
             }
             else{
                 gameover = true;
@@ -200,7 +201,7 @@ void Render() {
     if (menu){
         Util::DrawText(&program, fontTextureID, "George's Adventure", 1, -0.5f, glm::vec3(-4.25f, 2.5, 0));
         Util::DrawText(&program, fontTextureID, "The Queen has lost her coins.", 0.5, -0.25f, glm::vec3(-3.75f, 1, 0));
-        Util::DrawText(&program, fontTextureID, "Collect the missing 5 coins and ", 0.5, -0.25f, glm::vec3(-3.75f, 0.5, 0));
+        Util::DrawText(&program, fontTextureID, "Collect the missing 10 coins and ", 0.5, -0.25f, glm::vec3(-3.75f, 0.5, 0));
         Util::DrawText(&program, fontTextureID, "return them to the Queen.", 0.5, -0.25f, glm::vec3(-3.75f, 0, 0));
         Util::DrawText(&program, fontTextureID, "Beware of your enemies.", 0.5, -0.25f, glm::vec3(-3.75f, -0.5, 0));
         Util::DrawText(&program, fontTextureID, "You have 3 lives.", 0.5, -0.25f, glm::vec3(-3.75f, -1, 0));

@@ -38,7 +38,8 @@ public:
     int *animLeft = NULL;
     int *animUp = NULL;
     int *animDown = NULL;
-    
+    bool flag = true;
+    bool missionAccomplished = false;
     int *animIndices = NULL;
     int animFrames = 0;
     int animIndex = 0;
@@ -52,6 +53,7 @@ public:
     bool collidedRight = false;
     int coinsCollected = 0;
     Entity();
+    bool getEnd(Map* map);
     void Update(float deltaTime, Entity *player, Entity *enemies, Entity *coins, Entity *queen, int enemyCount, Map* map);
     void Render(ShaderProgram *program);
     void DrawSpriteFromTextureAtlas(ShaderProgram *program, GLuint textureID, int index);
@@ -63,7 +65,6 @@ public:
     void CheckCollisionsX(Entity *objects, int objectCount);
     
     void AI(Entity *player);
-    void AIWalker(); //walker doesn't attack, just walks around
-    void Patrol(Entity *player); //patrol will start chasing the player once player is close enough
-    void Jumper(Entity *player); //jumper will start to jump once player is close enough
+    void AIWalker(Entity *player); //walker doesn't attack, just walks around
+    void Patrol(Entity *player); //patrol will start chasing the player once player is close enough (horizontally only)
 };

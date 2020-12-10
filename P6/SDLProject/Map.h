@@ -29,4 +29,5 @@ public:
     void Build();
     void Render(ShaderProgram *program);
     bool IsSolid(glm::vec3 position, float *penetration_x, float *penetration_y);
+    bool end = false;
 };
