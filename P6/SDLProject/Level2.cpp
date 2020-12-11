@@ -22,6 +22,7 @@ void Level2::Initialize() {
     state.queen->textureID = Util::LoadTexture("Sara-VT.png");
     state.queen->height = 1.5f;
     state.queen -> width = 0.8f;
+    state.queen -> entityType= QUEEN;
     
     state.player = new Entity();
     state.player->entityType = PLAYER;

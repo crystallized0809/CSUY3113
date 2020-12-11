@@ -231,7 +231,6 @@ void Entity::Update(float deltaTime, Entity *player, Entity *enemies, Entity *co
         }
         if (lastCollision->entityType == QUEEN){
             if(collidedTop || collidedLeft || collidedRight || collidedBottom){
-                std::cout << "sentting missionAccomplished to true" << std::endl;
                 missionAccomplished = true;
             }
         }

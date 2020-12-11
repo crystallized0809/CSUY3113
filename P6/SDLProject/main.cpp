@@ -231,7 +231,7 @@ int main(int argc, char* argv[]) {
         ProcessInput();
         Update();
         Render();
-        if(!menu && currentScene->state.nextScene < 3){
+        if(!menu && currentScene->state.nextScene < 2){
             if(currentScene -> state.nextScene >= 0) SwitchToScene(sceneList[currentScene->state.nextScene]);
         }
     }
